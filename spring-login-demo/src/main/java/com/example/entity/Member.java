@@ -19,7 +19,10 @@ public class Member {
 	private Long id;
 	
 	@Column(unique = true, nullable = false) //username 중복 방지 (SQL: UNIQUE 제약 조건)
-	private String username; // 로그인 아이디 (중복 방지)
+	private String userId; // 로그인 아이디 (중복 방지)
+	
+	@Column(nullable = false)
+	private String username;
 	
 	@Column(nullable = false)
 	private String password;
