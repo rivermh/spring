@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-
+ 
     // 회원 조회 (userId 기준)
     public Member findByUserId(String userId) {
         return memberRepository.findByUserId(userId).orElse(null);
