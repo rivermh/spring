@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/member")
 public class MemberController {
 
-	private final MemberService memberService;
+	//private final MemberService memberService;
 
 	// 회원가입 폼 페이지 이동
 	@GetMapping("/signup")
@@ -41,4 +41,4 @@ public class MemberController {
 			return "login";
 		} */
 	}
-}
+//}
