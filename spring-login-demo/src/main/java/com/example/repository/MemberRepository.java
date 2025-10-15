@@ -3,9 +3,12 @@ package com.example.repository;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.example.entity.Member;
 
+
+@Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 	
 	// 로그인 시 아이디로 조회 (Unique ID가 있다면)

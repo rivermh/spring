@@ -14,11 +14,11 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
 
-	//private final MemberService memberService;
+	private final MemberService memberService;
 
 	// 회원가입 폼 페이지 이동
 	@GetMapping("/signup")
@@ -27,18 +27,54 @@ public class MemberController {
 	}
 
 	// 회원가입 처리
-//	@PostMapping("/signup")
-	//public String signup(@RequestParam String userId, @RequestParam String username, @RequestParam String password,
-	//		HttpSession session, Model model) {
+	@PostMapping("/signup")
+	public String signup(@RequestParam String userId, @RequestParam String username, @RequestParam String password,
+			Model model) {
 
-	/*	Member member = memberService.login(userId, password);
-
-		if (member != null) {
-			session.setAttribute("loginUser", member); // 세션 저장
-			return "redirect:/"; // 홈 또는 마이페이지
-		} else {
-			model.addAttribute("error", "아이디 또는 비밀번호가 잘못되었습니다.");
-			return "login";
-		} */
+		Member member = new Member();
+		member.setUserId(userId);
+		member.setUsername(username);
+		member.setPassword(password);
+		
+		try {
+			memberService.signUp(member);
+		}catch (IllegalStateException e) {
+			model.addAttribute("error", e.getMessage());
+			return "signup";
+		}
+		return "redirect:/login";
 	}
-//}
+	
+	//로그인 폼
+	@GetMapping("/login")
+	public String login(@RequestParam String userId,@RequestParam String password, HttpSession session, Model model) {
+		Member loginMember = memberService.login(userId, password);
+		
+		if(loginMember == null) {
+			model.addAttribute("error", "아이디 또는 비밀번호가 올바르지 않습니다.");
+			return "login";
+		}
+		
+		session.setAttribute("loginMember", loginMember);
+		return "redirect:/home";
+	}
+	
+	//로그아웃
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/login";
+	}
+	
+	//홈
+	@GetMapping("/home")
+	public String home(HttpSession session, Model model) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		if(loginMember == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("member", loginMember);
+		return "home";
+	}
+}

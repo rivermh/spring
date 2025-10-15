@@ -25,5 +25,21 @@ public class MemberService {
 		}
 		return memberRepository.save(member);
 	}
+	
+	//로그인
+	public Member login(String userId, String password) {
+		Member member = memberRepository.findByUserId(userId).orElse(null);
+		
+		if(member != null && member.getPassword().equals(password)) {
+			return member;
+		}
+		return null;
+	}
+	
+	// 단순 조회용
+	public Member findByUserId(String userId) {
+		return memberRepository.findByUserId(userId).orElse(null);
+	}
+	
  
 }
