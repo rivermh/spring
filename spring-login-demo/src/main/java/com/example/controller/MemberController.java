@@ -22,18 +22,18 @@ public class MemberController {
 	@GetMapping("/signup")
 	public String signupForm() {
 		return "signup"; // templates/signup.html
-	}
+	} 
 
 	// 회원가입 처리
 	@PostMapping("/signup")
 	public String signup(@RequestParam String userId, @RequestParam String username, @RequestParam String password,
 			Model model) {
-
+ 
 		Member member = new Member();
 		member.setUserId(userId);
 		member.setUsername(username);
 		member.setPassword(password);
-		
+		 
 		try {
 			memberService.signUp(member);
 		}catch (IllegalStateException e) {
