@@ -71,7 +71,7 @@ public class MemberController {
 	}
 	
 	//홈
-	@GetMapping("/home")
+	@GetMapping("/")
 	public String home(HttpSession session, Model model) {
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		
