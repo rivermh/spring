@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.entity.Member;
@@ -15,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/member")
 public class MemberController {
 
 	private final MemberService memberService;
@@ -47,7 +45,13 @@ public class MemberController {
 	
 	//로그인 폼
 	@GetMapping("/login")
-	public String login(@RequestParam String userId,@RequestParam String password, HttpSession session, Model model) {
+	public String loginForm() {
+		return "login";
+	}
+	
+	//로그인 처리
+	@PostMapping("/login")
+	public String login(@RequestParam String userId, @RequestParam String password, HttpSession session, Model model) {
 		Member loginMember = memberService.login(userId, password);
 		
 		if(loginMember == null) {
