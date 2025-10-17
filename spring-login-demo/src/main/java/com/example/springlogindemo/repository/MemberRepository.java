@@ -1,11 +1,11 @@
-package com.example.repository;
+package com.example.springlogindemo.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.entity.Member;
+import com.example.springlogindemo.entity.Member;
 
 
 @Repository
@@ -15,7 +15,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	Optional<Member> findByUserId(String userId);
 	
 	// 이메일 중복 체크 같은 용도로
-	Optional<Member> findByEmail(String email);
+	//Optional<Member> findByEmail(String email);
 }
 
 // Member 엔티티 + PK 타입(Long)으로 JPA 기능 자동 제공

@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.springlogindemo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.entity.Member;
-import com.example.service.MemberService;
+import com.example.springlogindemo.entity.Member;
+import com.example.springlogindemo.service.MemberService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,19 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 
 	private final MemberService memberService;
-
+	
+	//홈
+	@GetMapping("/home")
+	public String home(HttpSession session, Model model) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		
+		if(loginMember == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("member", loginMember);
+		return "home";
+	}
+	
 	// 회원가입 폼 페이지 이동
 	@GetMapping("/signup")
 	public String signupForm() {
@@ -70,15 +82,41 @@ public class MemberController {
 		return "redirect:/login";
 	}
 	
-	//홈
-	@GetMapping("/")
-	public String home(HttpSession session, Model model) {
+	//마이페이지
+	@GetMapping("/mypage")
+	public String myPage(HttpSession session, Model model) {
 		Member loginMember = (Member) session.getAttribute("loginMember");
-		
 		if(loginMember == null) {
 			return "redirect:/login";
 		}
 		model.addAttribute("member", loginMember);
-		return "home";
+		return "mypage"; 
 	}
+	
+	//마이페이지 수정 폼
+	@GetMapping("/mypage/edit")
+	public String editForm(HttpSession session, Model model) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		if(loginMember == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("member", loginMember);
+		return "mypage-edit";
+	}
+	
+	//마이페이지 수정 처리
+	public String updateProfile(@RequestParam String username, HttpSession session) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		if(loginMember == null) {
+			return "redirect:/login";
+		}
+		memberService.updateMember(loginMember.getId(), username);
+		
+		//세션 정보도 같이 갱신
+		loginMember.setUsername(username);
+		session.setAttribute("loginMember", loginMember);
+		
+		return "redirect:/mypage";
+	}
+	
 }

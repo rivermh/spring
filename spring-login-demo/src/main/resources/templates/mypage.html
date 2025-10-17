@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>mypage</title>
+</head>
+<body>
+<h2>마이페이지</h2>
+<p>아이디 : <span th:text="${member.userId}"></span></p>
+<p>이름 : <span th:text="${member.username}"></span></p>
+
+<a href="/mypage/edit">정보 수정</a>
+<a href="/logout">로그아웃</a> 
+</body>
+</html>

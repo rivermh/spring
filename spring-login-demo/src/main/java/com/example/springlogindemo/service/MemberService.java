@@ -1,10 +1,10 @@
-package com.example.service;
+package com.example.springlogindemo.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.entity.Member;
-import com.example.repository.MemberRepository;
+import com.example.springlogindemo.entity.Member;
+import com.example.springlogindemo.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,5 +41,10 @@ public class MemberService {
 		return memberRepository.findByUserId(userId).orElse(null);
 	}
 	
+	//@Transactional
+	public void updateMember(Long id, String username) {
+		Member member = memberRepository.findById(id).orElseThrow();
+		member.setUsername(username);
+	}
  
 }
