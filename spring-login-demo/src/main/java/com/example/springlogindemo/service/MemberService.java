@@ -46,5 +46,6 @@ public class MemberService {
 		Member member = memberRepository.findById(id).orElseThrow();
 		member.setUsername(username);
 	}
- 
 }
+
+//@Transactional 트랙잭션을 시작해서 메서드가 끝날 때 commit 또는 rollback을 처리

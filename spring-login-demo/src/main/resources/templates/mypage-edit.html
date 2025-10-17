@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>mypage-edit</title>
+</head>
+<body>
+	<h2>정보 수정</h2>
+	<form action="/mypage/update" method="post">
+		<label>아이디 (수정불가):</label> <input type="text"
+			th:value="${member.userId}" disabled /> <label>이름 : </label> <input
+			type="text" name="username" th:value="${member.username}" required />
+		<button type="submit">수정하기</button>
+	</form>
+	
+	<a href="/mypage">뒤로가기</a>
+</body>
+</html>

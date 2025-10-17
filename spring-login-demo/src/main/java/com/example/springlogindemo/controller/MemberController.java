@@ -105,11 +105,12 @@ public class MemberController {
 	}
 	
 	//마이페이지 수정 처리
+	@PostMapping("/mypage/update")
 	public String updateProfile(@RequestParam String username, HttpSession session) {
 		Member loginMember = (Member) session.getAttribute("loginMember");
 		if(loginMember == null) {
 			return "redirect:/login";
-		}
+		} 
 		memberService.updateMember(loginMember.getId(), username);
 		
 		//세션 정보도 같이 갱신
