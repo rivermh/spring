@@ -1,5 +1,7 @@
 package com.example.springlogindemo.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.springlogindemo.entity.Post;
@@ -34,6 +36,7 @@ public class PostService {
         post.setContent(content);
     }
 
+    //게시글 삭제
     @Transactional
     public void deletePost(Long postId) {
         postRepository.deleteById(postId);
@@ -44,5 +47,11 @@ public class PostService {
     public Post findById(Long postId) {
         return postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. id=" + postId));
+    }
+    
+    //페이징용 메서드
+    @Transactional(readOnly = true)
+    public Page<Post> findAllPaged(Pageable pageable){
+    	return postRepository.findAll(pageable);
     }
 }

@@ -6,7 +6,9 @@
 </head>
 <body>
 <h2>게시판</h2>
+
 <a th:href="@{/posts/new}">새 글 작성</a>
+
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
         <tr>
@@ -18,9 +20,12 @@
         </tr>
     </thead>
     <tbody>
-        <tr th:each="post : ${posts}">
+        <!-- postPage.content로 리스트 반복 -->
+        <tr th:each="post : ${postPage.content}">
             <td th:text="${post.id}"></td>
-            <td><a th:href="@{'/posts/' + ${post.id}}" th:text="${post.title}"></a></td>
+            <td>
+                <a th:href="@{'/posts/' + ${post.id}}" th:text="${post.title}"></a>
+            </td>
             <td th:text="${post.member.username}"></td>
             <td th:text="${post.createdAt}"></td>
             <td>
@@ -32,5 +37,18 @@
         </tr>
     </tbody>
 </table>
+
+<!-- 📄 페이지네이션 -->
+<div style="margin-top: 20px;">
+    <span th:text="'현재 페이지: ' + ${postPage.number + 1} + ' / ' + ${postPage.totalPages}"></span>
+    <div>
+        <a th:if="${!postPage.first}"
+           th:href="@{/posts(page=${postPage.number - 1})}">이전</a>
+
+        <a th:if="${!postPage.last}"
+           th:href="@{/posts(page=${postPage.number + 1})}">다음</a>
+    </div>
+</div>
+
 </body>
 </html>

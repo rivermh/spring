@@ -1,5 +1,8 @@
 package com.example.springlogindemo.controller;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +28,11 @@ public class PostController {
 	
 	// 게시글 목록
 	@GetMapping("/posts")
-	public String listPosts(Model model) {
-		model.addAttribute("posts", postService.findAll());
+	public String listPosts(@RequestParam(defaultValue = "0") int page, Model model) {
+		PageRequest pageRequest = PageRequest.of(page, 5); //페이지당 5개
+		Page<Post> postPage = postService.findAllPaged(pageRequest);
+		
+		model.addAttribute("postPage", postPage);
 		return "post-list";	
 	}
 	
