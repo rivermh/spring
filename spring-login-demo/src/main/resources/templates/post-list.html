@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+</head>
+<body>
+<h2>게시판</h2>
+<a th:href="@{/posts/new}">새 글 작성</a>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>액션</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.id}"></td>
+            <td><a th:href="@{'/posts/' + ${post.id}}" th:text="${post.title}"></a></td>
+            <td th:text="${post.member.username}"></td>
+            <td th:text="${post.createdAt}"></td>
+            <td>
+                <a th:href="@{'/posts/' + ${post.id} + '/edit'}">수정</a>
+                <form th:action="@{'/posts/' + ${post.id} + '/delete'}" method="post" style="display:inline;">
+                    <button type="submit">삭제</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

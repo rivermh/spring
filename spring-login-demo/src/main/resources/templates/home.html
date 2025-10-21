@@ -9,17 +9,18 @@
 
 <!-- 로그인 사용자 정보 표시 -->
 <div th:if="${member}">
-	<p><strong th:text="${member.username}"></strong> 님, 환영합니다!</p>
-	<p>로그인 ID: <span th:text="${member.userId}"></span></p>
+    <p><strong th:text="${member.username}"></strong> 님, 환영합니다!</p>
+    <p>로그인 ID: <span th:text="${member.userId}"></span></p>
 </div>
 
 <!-- 로그아웃 버튼 -->
 <a th:href="@{/logout}">로그아웃</a>
 
 <br><br>
-<!--  페이지 이동 테스트용 링크(추후 기능 확장용) -->
+<!-- 페이지 이동 테스트용 링크(추후 기능 확장용) -->
 <a th:href="@{/login}">로그인 페이지로 이동</a> |
-<a th:href="@{/signup}">회원가입 페이지로 이동</a>
+<a th:href="@{/signup}">회원가입 페이지로 이동</a> |
+<a th:href="@{/posts}">게시판으로 이동</a> <!-- 추가된 링크 -->
 
 </body>
 </html>
