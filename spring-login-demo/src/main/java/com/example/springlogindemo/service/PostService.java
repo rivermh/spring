@@ -53,5 +53,5 @@ public class PostService {
     @Transactional(readOnly = true)
     public Page<Post> findAllPaged(Pageable pageable){
     	return postRepository.findAll(pageable);
-    }
+    } 
 }
